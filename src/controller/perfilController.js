@@ -1,3 +1,5 @@
+const Usuario = require('../models/usuario');
+
 function indexView(req, res) {
     res.render('index.html');
 }
@@ -7,18 +9,29 @@ function loginView(req, res) {
 }
 
 function cadastroView(req, res) {
-    res.render('cadastro.html');
+    res.render('cadastro.html', {
+        success_msg: req.query.success || '',
+        error_msg: req.query.error || ''
+    });
 }
 
-function handleCadastro(req, res) {
-    // Lógica para lidar com o cadastro pode ser adicionada aqui
-    // Redireciona para a página de login após o cadastro
-    res.redirect('/login');
+async function handleCadastro(req, res) {
+    const { email, password, userType } = req.body;
+
+    try {
+        await Usuario.create({ email, password, userType });
+        res.redirect('/login?success=Cadastro realizado com sucesso!');
+    } catch (error) {
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            res.redirect('/cadastro?error=Email já está sendo usado.');
+        } else {
+            console.error('Erro ao cadastrar usuário:', error);
+            res.status(500).send('Erro ao cadastrar usuário');
+        }
+    }
 }
 
 function handleLogin(req, res) {
-    // Lógica para lidar com o login pode ser adicionada aqui
-    // Redireciona para a página inicial após o login
     res.redirect('/');
 }
 
