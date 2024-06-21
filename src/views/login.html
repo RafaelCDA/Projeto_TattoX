@@ -19,16 +19,16 @@
                 <div class="card mt-5">
                     <div class="card-body">
                         <h3 class="card-title text-center">Login</h3>
-                        {{#error}}
+                        {{#error_msg}}
                         <div class="alert alert-danger" role="alert">
-                            {{error}}
+                            {{error_msg}}
                         </div>
-                        {{/error}}
-                        {{#success}}
+                        {{/error_msg}}
+                        {{#success_msg}}
                         <div class="alert alert-success" role="alert">
-                            {{success}}
+                            {{success_msg}}
                         </div>
-                        {{/success}}
+                        {{/success_msg}}
                         <form action="/login" method="POST">
                             <div class="form-group">
                                 <label for="email">Email</label>
