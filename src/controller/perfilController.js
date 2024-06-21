@@ -17,10 +17,10 @@ function cadastroView(req, res) {
 }
 
 async function handleCadastro(req, res) {
-    const { email, password, userType } = req.body;
+    const { nome, email, password, userType } = req.body;
 
     try {
-        await Usuario.create({ email, password, userType });
+        await Usuario.create({ nome, email, password, userType });
         res.redirect('/login?success=Cadastro realizado com sucesso!');
     } catch (error) {
         if (error.name === 'SequelizeUniqueConstraintError') {
@@ -53,6 +53,22 @@ async function handleLogin(req, res) {
     }
 }
 
+async function handleImageUpload(req, res) {
+    const user = req.session.user;
+
+    if (user && user.userType === 'tatuador') {
+        if (!req.file) {
+            return res.status(400).send('Nenhuma imagem enviada');
+        }
+        const imageUrl = path.join('/uploads', req.file.filename);
+        // Aqui você pode salvar imageUrl no banco de dados associado ao usuário se necessário
+        res.send(`Imagem enviada com sucesso: ${imageUrl}`);
+    } else {
+        res.status(403).send('Acesso negado. Somente tatuadores podem enviar imagens.');
+    }
+}
+
+
 async function bancoView(req, res) {
     try {
         const usuarios = await Usuario.findAll();
@@ -69,5 +85,6 @@ module.exports = {
     cadastroView,
     handleCadastro,
     handleLogin,
+    handleImageUpload,
     bancoView
 };

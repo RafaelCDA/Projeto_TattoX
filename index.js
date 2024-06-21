@@ -10,6 +10,7 @@ app.set('view engine', 'html');
 app.set('views', __dirname + '/src/views');
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'src/uploads')));
 
 db.sync().then(() => {
     console.log('Banco de dados sincronizado');
