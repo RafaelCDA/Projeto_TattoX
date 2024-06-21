@@ -8,6 +8,10 @@ const Usuario = database.define('Usuario', {
         allowNull: false,
         primaryKey: true
     },
+    nome: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
