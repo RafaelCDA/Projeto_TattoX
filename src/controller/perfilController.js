@@ -1,3 +1,4 @@
+// perfilController.js
 const Usuario = require('../models/usuario');
 
 function indexView(req, res) {
@@ -31,8 +32,35 @@ async function handleCadastro(req, res) {
     }
 }
 
-function handleLogin(req, res) {
-    res.redirect('/');
+async function handleLogin(req, res) {
+    const { email, password } = req.body;
+
+    try {
+        const usuario = await Usuario.findOne({ where: { email } });
+        if (usuario) {
+            if (usuario.password === password) {
+                // Lógica de autenticação (ex.: iniciar uma sessão)
+                res.redirect('/');
+            } else {
+                res.redirect('/login?error=Senha incorreta.');
+            }
+        } else {
+            res.redirect('/login?error=Usuário não encontrado.');
+        }
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        res.status(500).send('Erro ao fazer login');
+    }
+}
+
+async function bancoView(req, res) {
+    try {
+        const usuarios = await Usuario.findAll();
+        res.render('banco.html', { usuarios });
+    } catch (error) {
+        console.error('Erro ao visualizar banco de dados:', error);
+        res.status(500).send('Erro ao visualizar banco de dados');
+    }
 }
 
 module.exports = {
@@ -40,5 +68,6 @@ module.exports = {
     loginView,
     cadastroView,
     handleCadastro,
-    handleLogin
+    handleLogin,
+    bancoView
 };

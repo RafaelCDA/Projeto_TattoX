@@ -1,3 +1,4 @@
+<!-- login.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -18,16 +19,26 @@
                 <div class="card mt-5">
                     <div class="card-body">
                         <h3 class="card-title text-center">Login</h3>
+                        {{#error}}
+                        <div class="alert alert-danger" role="alert">
+                            {{error}}
+                        </div>
+                        {{/error}}
+                        {{#success}}
+                        <div class="alert alert-success" role="alert">
+                            {{success}}
+                        </div>
+                        {{/success}}
                         <form action="/login" method="POST">
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="Digite seu email">
+                                    placeholder="Digite seu email" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Senha</label>
                                 <input type="password" class="form-control" id="password" name="password"
-                                    placeholder="Digite sua senha">
+                                    placeholder="Digite sua senha" required>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Entrar</button>
                         </form>

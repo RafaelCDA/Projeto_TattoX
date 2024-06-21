@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 // Cria a instância do Sequelize para usar o banco SQLite
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: './database.sqlite'
+    storage: './src/database.sqlite'
 });
 
 // Testa a conexão
