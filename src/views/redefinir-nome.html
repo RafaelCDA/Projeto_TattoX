@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefinir Nome de Usuário</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.amazonaws.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-4">Redefinir Nome de Usuário</h3>
+                        {{#success_msg}}
+                        <div class="alert alert-success" role="alert">
+                            {{success_msg}}
+                        </div>
+                        {{/success_msg}}
+                        {{#error_msg}}
+                        <div class="alert alert-danger" role="alert">
+                            {{error_msg}}
+                        </div>
+                        {{/error_msg}}
+                        <form action="/redefinir-nome" method="POST">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="Digite seu email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="novoNome">Novo Nome de Usuário</label>
+                                <input type="text" class="form-control" id="novoNome" name="novoNome"
+                                    placeholder="Digite seu novo nome de usuário" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Redefinir Nome de Usuário</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

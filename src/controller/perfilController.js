@@ -1,4 +1,4 @@
-// perfilController.js
+// src/controller/perfilController.js
 const Usuario = require('../models/usuario');
 
 function indexView(req, res) {
@@ -96,6 +96,58 @@ async function bancoView(req, res) {
     }
 }
 
+function configView(req, res) {
+    res.render('config.html');
+}
+
+function redefinirSenhaView(req, res) {
+    res.render('redefinir-senha.html');
+}
+
+async function handleRedefinirSenha(req, res) {
+    const { email, novaSenha } = req.body;
+
+    try {
+        const usuario = await Usuario.findOne({ where: { email } });
+        if (usuario) {
+            usuario.password = novaSenha;
+            await usuario.save();
+            res.redirect('/config?success=Senha redefinida com sucesso!');
+        } else {
+            res.redirect('/redefinir-senha?error=Usuário não encontrado.');
+        }
+    } catch (error) {
+        console.error('Erro ao redefinir senha:', error);
+        res.status(500).send('Erro ao redefinir senha');
+    }
+}
+
+function redefinirNomeView(req, res) {
+    res.render('redefinir-nome.html');
+}
+
+async function handleRedefinirNome(req, res) {
+    const { email, novoNome } = req.body;
+
+    try {
+        const usuario = await Usuario.findOne({ where: { email } });
+        if (usuario) {
+            usuario.nome = novoNome;
+            await usuario.save();
+            // Atualizar a sessão com o novo nome de usuário
+            if (req.session.user && req.session.user.email === email) {
+                req.session.user.nome = novoNome;
+            }
+            res.redirect('/config?success=Nome de usuário redefinido com sucesso!');
+        } else {
+            res.redirect('/redefinir-nome?error=Usuário não encontrado.');
+        }
+    } catch (error) {
+        console.error('Erro ao redefinir nome:', error);
+        res.status(500).send('Erro ao redefinir nome');
+    }
+}
+
 module.exports = {
     indexView,
     loginView,
@@ -104,5 +156,10 @@ module.exports = {
     handleLogin,
     logout,
     handleImageUpload,
-    bancoView
+    bancoView,
+    configView,
+    redefinirSenhaView,
+    handleRedefinirSenha,
+    redefinirNomeView,
+    handleRedefinirNome
 };
