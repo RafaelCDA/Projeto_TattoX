@@ -2,8 +2,9 @@
 const Usuario = require('../models/usuario');
 
 function indexView(req, res) {
-    const userName = req.session && req.session.user ? req.session.user.nome : null;
-    res.render('index.html', { userName });
+    const user = req.session && req.session.user ? req.session.user : null;
+    const isTatuador = user && user.userType === 'tatuador';
+    res.render('index.html', { userName: user ? user.nome : null, isTatuador });
 }
 
 function loginView(req, res) {
@@ -43,17 +44,14 @@ async function handleLogin(req, res) {
         const usuario = await Usuario.findOne({ where: { email } });
         if (usuario) {
             if (usuario.password === password) {
-                // Salva o nome do usuário na sessão
+                // Salva o nome e o tipo de usuário na sessão
                 req.session.user = {
                     id: usuario.id,
                     nome: usuario.nome,
-                    email: usuario.email
+                    email: usuario.email,
+                    userType: usuario.userType
                 };
-                if(usuario.userType == 'tatuador'){
-                    res.redirect('/tatuador-perfil');
-                }else{
-                    res.redirect('/');
-                }
+                res.redirect('/');
             } else {
                 res.redirect('/login?error=Senha incorreta.');
             }
