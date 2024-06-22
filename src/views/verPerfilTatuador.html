@@ -1,17 +1,73 @@
-<!-- src/views/verPerfilTatuador.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Tatuador</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .profile-container {
+            text-align: center;
+        }
+        .profile-header img {
+            max-width: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .profile-details {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .profile-details h2 {
+            margin-bottom: 20px;
+        }
+        .profile-details p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .back-button {
+            display: block;
+            margin: 0 auto;
+            width: 200px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Perfil do Tatuador</h1>
-    <p>Nome: {{ tatuador.nome }}</p>
-    <p>Email: {{ tatuador.email }}</p>
-    <p>Local de Trabalho: {{ tatuador.localTrabalho }}</p>
-    <p>Estilo da tatuagem: {{tatuador.estilosDesenhos}}</p>
-    <p>Preços das Tatuagens: {{ tatuador.precoTatuagens }}</p>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="\images\Logo.png" alt="Logo">
+            <h1>Perfil do Tatuador</h1>
+        </div>
+        <div class="profile-details">
+            <h2>Informações</h2>
+            <p><strong>Nome:</strong> {{ tatuador.nome }}</p>
+            <p><strong>Email:</strong> {{ tatuador.email }}</p>
+            <p><strong>Local de Trabalho:</strong> {{ tatuador.localTrabalho }}</p>
+            <p><strong>Estilo da Tatuagem:</strong> {{ tatuador.estilosDesenhos }}</p>
+            <p><strong>Preços das Tatuagens:</strong> {{ tatuador.precoTatuagens }}</p>
+        </div>
+        <a href="/" class="btn btn-primary back-button">Voltar à Página Inicial</a>
+    </div>
 </body>
+
 </html>

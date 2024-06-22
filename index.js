@@ -24,7 +24,7 @@ db.sync().then(() => {
 
 app.use('/', require('./src/routes/perfilRouter'));
 
-const PORT = 8090;
+const PORT = 8080;
 app.listen(PORT, function () {
     console.log('app executando na porta ' + PORT);
 });

@@ -1,22 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Tatuador</title>
+    <title>Perfil do Tatuador</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile-header img {
+            max-width: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .profile-info {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-info h2 {
+            margin-bottom: 20px;
+        }
+        .profile-info p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .edit-profile {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back-to-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="profile-header">
+            <img src="/images/Logo.png">
+            <h1>Perfil do Tatuador</h1>
+        </div>
+        <div class="profile-info">
+            <h2>Informações</h2>
+            <p><strong>Nome:</strong> {{ usuario.nome }}</p>
+            <p><strong>Email:</strong> {{ usuario.email }}</p>
+            <p><strong>Local de Trabalho:</strong> {{ usuario.localTrabalho }}</p>
+            <p><strong>Estilos da Tatuagem:</strong> {{ usuario.estilosDesenhos }}</p>
+            <p><strong>Preços das Tatuagens:</strong> {{ usuario.precoTatuagens }}</p>
+        </div>
+        <div class="edit-profile">
+            <a href="/editar-perfil-tatuador" class="btn btn-primary">Editar Perfil</a>
+        </div>
+        <div class="back-to-home">
+            <a href="/" class="btn btn-secondary">Voltar para Home</a>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <h1>Perfil do Tatuador</h1>
-    <p>Nome: {{ usuario.nome }}</p>
-    <p>Email: {{ usuario.email }}</p>
-    <p>Local de Trabalho: {{ usuario.localTrabalho }}</p>
-    <p>Estilos da tatuagem: {{usuario.estilosDesenhos}}</p>
-    <p>Preços das Tatuagens: {{ usuario.precoTatuagens }}</p>
-    <a href="/editar-perfil-tatuador">Editar Perfil</a>
 </body>
+
 </html>
