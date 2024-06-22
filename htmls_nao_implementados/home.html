@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .social-menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .social-menu .menu-item {
+            text-align: center;
+            margin: 0 10px; /* Espaçamento entre os itens */
+            cursor: pointer;
+        }
+
+        .social-menu .menu-item a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-menu .menu-item a:hover {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .social-menu .menu-item i {
+            font-size: 48px;
+        }
+
+        .social-menu .menu-item span {
+            display: block;
+            margin-top: 5px; /* Espaçamento entre o ícone e o texto */
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4 text-center">
+                <img src="/images/Logo.png" alt="Tattox Logo">
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <div class="social-menu">
+                    <div class="menu-item">
+                        <a href="/home.html">
+                            <i class="fas fa-home"></i>
+                            <span>Início</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="/mensagens.html">
+                            <i class="fas fa-envelope"></i>
+                            <span>Mensagens</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="/busca.html">
+                            <i class="fas fa-search"></i>
+                            <span>Buscar</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="/config.html">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurações</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="text-muted">&copy; Seu Site - Todos os Direitos Reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
