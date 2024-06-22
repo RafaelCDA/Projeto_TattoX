@@ -6,7 +6,10 @@ function indexView(req, res) {
 }
 
 function loginView(req, res) {
-    res.render('login.html');
+    res.render('login.html', {
+        success_msg: req.query.success || '',
+        error_msg: req.query.error || ''
+    });
 }
 
 function cadastroView(req, res) {
@@ -45,7 +48,7 @@ async function handleLogin(req, res) {
                 res.redirect('/login?error=Senha incorreta.');
             }
         } else {
-            res.redirect('/login?error=Usuário não encontrado.');
+            res.redirect('/login?error=Não existe uma conta com esse email.');
         }
     } catch (error) {
         console.error('Erro ao fazer login:', error);
