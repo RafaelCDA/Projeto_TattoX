@@ -32,6 +32,18 @@
       {{/userName}}
     </div>
   </div>
+
+  <!-- Caixa de busca -->
+  <div class="container text-center mt-5">
+    <form action="/buscar-tatuador" method="GET" class="form-inline justify-content-center">
+      <div class="form-group mb-2">
+        <label for="search" class="sr-only">Buscar Tatuador</label>
+        <input type="text" id="search" name="search" class="form-control" placeholder="Buscar Tatuador" required>
+      </div>
+      <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+    </form>
+  </div>
+
   <div class="container">
     <footer style="margin-top: 300px;">
       <p class="text-center text-muted">&copy; TattoX</p>

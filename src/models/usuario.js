@@ -24,6 +24,18 @@ const Usuario = database.define('Usuario', {
     userType: {
         type: DataTypes.ENUM('usuario', 'tatuador'),
         allowNull: false
+    },
+    localTrabalho: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    precoTatuagens: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    estilosDesenhos: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 });
 

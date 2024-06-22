@@ -49,7 +49,11 @@ async function handleLogin(req, res) {
                     nome: usuario.nome,
                     email: usuario.email
                 };
-                res.redirect('/');
+                if(usuario.userType == 'tatuador'){
+                    res.redirect('/tatuador-perfil');
+                }else{
+                    res.redirect('/');
+                }
             } else {
                 res.redirect('/login?error=Senha incorreta.');
             }
@@ -69,21 +73,6 @@ function logout(req, res) {
         }
         res.redirect('/');
     });
-}
-
-async function handleImageUpload(req, res) {
-    const user = req.session.user;
-
-    if (user && user.userType === 'tatuador') {
-        if (!req.file) {
-            return res.status(400).send('Nenhuma imagem enviada');
-        }
-        const imageUrl = path.join('/uploads', req.file.filename);
-        // Aqui você pode salvar imageUrl no banco de dados associado ao usuário se necessário
-        res.send(`Imagem enviada com sucesso: ${imageUrl}`);
-    } else {
-        res.status(403).send('Acesso negado. Somente tatuadores podem enviar imagens.');
-    }
 }
 
 async function bancoView(req, res) {
@@ -148,6 +137,76 @@ async function handleRedefinirNome(req, res) {
     }
 }
 
+async function homeTatuadorView(req, res) {
+    try {
+        const usuario = await Usuario.findByPk(req.session.user.id);
+        if (usuario) {
+            res.render('home_tatuador.html', { usuario });
+        } else {
+            res.redirect('/login?error=Usuário não encontrado.');
+        }
+    } catch (error) {
+        console.error('Erro ao carregar perfil do tatuador:', error);
+        res.status(500).send('Erro ao carregar perfil do tatuador');
+    }
+}
+
+function editarPerfilTatuadorView(req, res) {
+    res.render('editar_perfilTatuador.html');
+}
+
+async function handleAtualizarPerfilTatuador(req, res) {
+    const { localTrabalho, precoTatuagens, estilosDesenhos } = req.body;
+
+    try {
+        const usuario = await Usuario.findByPk(req.session.user.id);
+        if (usuario) {
+            usuario.localTrabalho = localTrabalho;
+            usuario.precoTatuagens = precoTatuagens;
+            usuario.estilosDesenhos = estilosDesenhos;
+            await usuario.save();
+            res.redirect('/tatuador-perfil?success=Perfil atualizado com sucesso!');
+        } else {
+            res.redirect('/editar-perfil-tatuador?error=Usuário não encontrado.');
+        }
+    } catch (error) {
+        console.error('Erro ao atualizar perfil do tatuador:', error);
+        res.status(500).send('Erro ao atualizar perfil do tatuador');
+    }
+}
+
+async function buscarTatuador(req, res) {
+    const { search } = req.query;
+
+    try {
+        const tatuador = await Usuario.findOne({ where: { nome: search, userType: 'tatuador' } });
+        if (tatuador) {
+            res.redirect(`/tatuador/${tatuador.id}`);
+        } else {
+            res.redirect('/?error=Tatuador não encontrado');
+        }
+    } catch (error) {
+        console.error('Erro ao buscar tatuador:', error);
+        res.status(500).send('Erro ao buscar tatuador');
+    }
+}
+
+async function verPerfilTatuador(req, res) {
+    const tatuadorId = req.params.id;
+
+    try {
+        const tatuador = await Usuario.findByPk(tatuadorId);
+        if (tatuador) {
+            res.render('verPerfilTatuador.html', { tatuador });
+        } else {
+            res.status(404).send('Tatuador não encontrado');
+        }
+    } catch (error) {
+        console.error('Erro ao carregar perfil do tatuador:', error);
+        res.status(500).send('Erro ao carregar perfil do tatuador');
+    }
+}
+
 module.exports = {
     indexView,
     loginView,
@@ -155,11 +214,15 @@ module.exports = {
     handleCadastro,
     handleLogin,
     logout,
-    handleImageUpload,
     bancoView,
     configView,
     redefinirSenhaView,
     handleRedefinirSenha,
     redefinirNomeView,
-    handleRedefinirNome
+    handleRedefinirNome,
+    homeTatuadorView,
+    editarPerfilTatuadorView,
+    handleAtualizarPerfilTatuador,
+    buscarTatuador,
+    verPerfilTatuador
 };
