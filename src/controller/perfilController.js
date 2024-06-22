@@ -2,7 +2,8 @@
 const Usuario = require('../models/usuario');
 
 function indexView(req, res) {
-    res.render('index.html');
+    const userName = req.session && req.session.user ? req.session.user.nome : null;
+    res.render('index.html', { userName });
 }
 
 function loginView(req, res) {
@@ -20,10 +21,10 @@ function cadastroView(req, res) {
 }
 
 async function handleCadastro(req, res) {
-    const { nome,email, password, userType } = req.body;
+    const { nome, email, password, userType } = req.body;
 
     try {
-        await Usuario.create({ nome,email, password, userType });
+        await Usuario.create({ nome, email, password, userType });
         res.redirect('/login?success=Cadastro realizado com sucesso!');
     } catch (error) {
         if (error.name === 'SequelizeUniqueConstraintError') {
@@ -42,7 +43,12 @@ async function handleLogin(req, res) {
         const usuario = await Usuario.findOne({ where: { email } });
         if (usuario) {
             if (usuario.password === password) {
-                // Lógica de autenticação (ex.: iniciar uma sessão)
+                // Salva o nome do usuário na sessão
+                req.session.user = {
+                    id: usuario.id,
+                    nome: usuario.nome,
+                    email: usuario.email
+                };
                 res.redirect('/');
             } else {
                 res.redirect('/login?error=Senha incorreta.');
@@ -54,6 +60,15 @@ async function handleLogin(req, res) {
         console.error('Erro ao fazer login:', error);
         res.status(500).send('Erro ao fazer login');
     }
+}
+
+function logout(req, res) {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).send('Erro ao fazer logout');
+        }
+        res.redirect('/');
+    });
 }
 
 async function handleImageUpload(req, res) {
@@ -87,6 +102,7 @@ module.exports = {
     cadastroView,
     handleCadastro,
     handleLogin,
+    logout,
     handleImageUpload,
     bancoView
 };

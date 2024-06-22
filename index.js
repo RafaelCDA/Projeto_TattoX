@@ -13,6 +13,12 @@ app.set('views', __dirname + '/src/views');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'src/uploads')));
 
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true
+}));
+
 db.sync().then(() => {
     console.log('Banco de dados sincronizado');
 });
